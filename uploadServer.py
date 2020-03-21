@@ -87,6 +87,7 @@ def upload_file():
             async_option = {"async":True}
             notification_url = "https://eni5be5irqov.x.pipedream.net"
             cloudinaryRes = cloudinary.uploader.upload_large(filename, resource_type = "video", public_id = fileNamePublic, eager=[{"streaming_profile":"full_hd", "format":"m3u8"}], eager_async=True, eager_notification_url=notification_url, notification_url=notification_url, context="className=" + className + "|instructorFirstName=" + instructorFirstName, **async_option);
+            os.remove(filename)
             print(cloudinaryRes)
             flash(filename + ' successfully uploaded at ' + date_time)
             return redirect('/')
