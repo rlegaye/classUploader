@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+<h2>Recording Schedule (Class Name // Duration (Seconds) // Preset Position // Schedule):</h2>
+
+<ol>
+	{% for key, value in classes.items() %}
+      <li>Key: {{key}}  -  Class: {{value}}</li>
+   	{% endfor %}
+</ol>  
+
+<br/>
+
+<h2>Add New Class:</h2>
+
+Class Name: <input type="text" id="class_name"  /> Camera Preset Position (1-16): <input type="text" id="preset_position"  /> <br/>
+Class Duration (seconds): <input type="text" id="class_duration"  />
+Class Start Time (24H:MM): <input type="text" id="class_start"  />
+Class Days:   <input type="checkbox" id="mon"> Monday  <input type="checkbox" id="tue"> Tuesday  <input type="checkbox" id="wed"> Wednesday  <input type="checkbox" id="thu"> Thursday  <input type="checkbox" id="fri"> Friday  <input type="checkbox" id="sat"> Saturday  <input type="checkbox" id="sun"> Sunday <br/>
+Class Tags (Comma Seperated): <input type="text" id="class_tags"  />
+
+<button id="submitButton" type="button">Submit</button>
+
+<br/>
+
+<h2>Remove Class:</h2>
+
+Class Key: <input type="text" id="class_id"  />
+<button id="deleteButton" type="button">Delete</button>
+
+<br/>
+
+<script>
+$( "#submitButton" ).click(function() {
+	var dow = [];
+	if($('#mon').is(':checked')) {
+		dow.push("mon")
+	}
+	if($('#tue').is(':checked')) {
+		dow.push("tue")
+	}
+	if($('#wed').is(':checked')) {
+		dow.push("wed")
+	}
+	if($('#thu').is(':checked')) {
+		dow.push("thu")
+	}
+	if($('#fri').is(':checked')) {
+		dow.push("fri")
+	}
+	if($('#sat').is(':checked')) {
+		dow.push("sat")
+	}
+	if($('#sun').is(':checked')) {
+		dow.push("sun")
+	}
+	var url = window.location.origin + "/scheduleClass?class=" + $('#class_name').val() + "&duration=" + $('#class_duration').val() + "&startTime=" + $("#class_start").val() + "&dow=" + dow.join() + "&preset=" + $('#preset_position').val();
+	console.log(url);
+	$.get(url, function( data ) {
+  		//alert( "Load was performed." );
+  		location.reload(true);
+	});
+});
+
+$( "#deleteButton" ).click(function() {
+	var url = window.location.origin + "/removeClass?class=" + $('#class_id').val();
+	console.log(url);
+	$.get(url, function( data ) {
+  		location.reload(true);
+	});
+});
+
+</script>
+
+</body>
+</html>
