@@ -3,4 +3,4 @@
 launch ec2 linux instance
 ssh to instance
 git clone
-run python
+run python - nohup python uploadServer.py &
