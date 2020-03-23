@@ -20,9 +20,9 @@ upload_app.secret_key = '0TzSee3w8i'
 cameraUrl = "http://10.192.101.171"
 
 cloudinary.config(
-    cloud_name = "djpspvb4v",
-    api_key = "672854352616411",
-    api_secret = "9LJCHQOGarWstgEWY6BKx7JeoGM"
+    cloud_name = "nike-nxt", # "djpspvb4v",
+    api_key = "829849653493426", # "672854352616411",
+    api_secret = "1mqRjXFcVDyx5-5t0pODnXV-cHM" # "9LJCHQOGarWstgEWY6BKx7JeoGM"
 )
 
 ALLOWED_EXTENSIONS = set(['mov', 'mp4', 'png', 'jpg', 'jpeg', 'gif'])
