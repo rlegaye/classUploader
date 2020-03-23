@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, flash, redirect
 from datetime import datetime
 from werkzeug.utils import secure_filename
+from flask_httpauth import HTTPBasicAuth
+from werkzeug.security import generate_password_hash, check_password_hash
 
 import os
 import requests
@@ -24,6 +26,19 @@ cloudinary.config(
 )
 
 ALLOWED_EXTENSIONS = set(['mov', 'mp4', 'png', 'jpg', 'jpeg', 'gif'])
+
+auth = HTTPBasicAuth()
+
+users = {
+    "charli": generate_password_hash("Covid19!"),
+}
+
+@auth.verify_password
+def verify_password(username, password):
+    if username in users:
+        return check_password_hash(users.get(username), password)
+    return False
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -50,6 +65,7 @@ def upload():
     cloudinaryRes = cloudinary.uploader.upload(fileName, resource_type = "video", public_id = fileNameSansExt);
 
 @upload_app.route('/')
+@auth.login_required
 def upload_form():
     return render_template('upload.html')
 
